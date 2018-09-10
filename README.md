@@ -2,5 +2,14 @@
 
 Thanks for looking into this project.
 
-## Live Demo
+![React-to-test screenshot](public/screenshot.png?raw=true "React-to-test in action")
+
+## Install
+
+Clone this project and then run:
+
+```
+npm install
+npm start
+```
 
