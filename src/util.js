@@ -8,7 +8,8 @@ export const getOutputVenues = (users, venues, filteredUsers) => {
     for (const venue of venues) {
         issues[venue.name] = { // for each venue
             drinks: [], // keep a list of users with missing drinks...
-            food: [] // ...and food
+            food: [], // ...and food,
+            isIssue: false
         }
     }
 
@@ -20,6 +21,7 @@ export const getOutputVenues = (users, venues, filteredUsers) => {
             if (!isDrink) {
                 // note an issue with missing drinks for the currently checked user
                 issues[venue.name].drinks.push(user.name)
+                issues[venue.name].isIssue = true
             }
 
             return acc && isDrink
@@ -31,6 +33,7 @@ export const getOutputVenues = (users, venues, filteredUsers) => {
             if (!isFood) {
                 // note an issue with food for the currently checked user
                 issues[venue.name].food.push(user.name)
+                issues[venue.name].isIssue = true
             }
 
             return acc && isFood

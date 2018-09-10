@@ -8,14 +8,14 @@ class TimeOut extends Component {
         super(props)
 
         this.state = {
-            filteredUsers: [] // an array of selected users
+            filteredUsers: [], // an array of selected users
+            results: {}
         }
 
         this.updateFilterUser = this.updateFilterUser.bind(this)
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log(getOutputVenues(users, venues, this.state.filteredUsers))
     }
 
     updateFilterUser(username, checked) {
@@ -27,30 +27,46 @@ class TimeOut extends Component {
             filteredUsers.push(username)
         }
 
+        const results = getOutputVenues(users, venues, filteredUsers)
+
         this.setState({
-            filteredUsers
+            filteredUsers,
+            results
         })
     }
 
     render() {
         const {
-            filteredUsers
+            filteredUsers,
+            results
         } = this.state
+
+        const Issue = ({ venueName, issues }) => <li>
+            {venueName}
+            <ul>
+                {issues.drinks.map(user => <li>There is nothing for {user} to drink</li>)}
+                {issues.food.map(user => <li>There is nothing for {user} to eat</li>)}
+            </ul>
+        </li>
 
         return (
             <div className="TimeOut">
                 <div className="TimeOut__Input">
                     <h2 className="TimeOut__Headline">Please select who is going out</h2>
-                    {users.map(user => <User username={user.name} filteredUsers={filteredUsers} updateFilterUser={this.updateFilterUser}/>)}
+                    {users.map(user => <User username={user.name} filteredUsers={filteredUsers} updateFilterUser={this.updateFilterUser} />)}
                 </div>
                 <div className="TimeOut__Output">
                     <h2 className="TimeOut__Headline">Places to go</h2>
                     <ul>
-                        {venues.map(venue => <li>{venue.name}</li>)}
+                        {venues.filter(venue => results.canGoVenues && results.canGoVenues.includes(venue)).map(venue => <li>{venue.name}</li>)}
                     </ul>
                     <h2 className="TimeOut__Headline">Places to avoid</h2>
                     <ul>
-                        {venues.map(venue => <li>{venue.name}</li>)}
+                        {Object.keys(results.issues || {}).map(venueName => {
+                            if (results.issues[venueName].isIssue) {
+                                return <Issue venueName={venueName} issues={results.issues[venueName]} />
+                            }
+                        })}
                     </ul>
                 </div>
             </div>
