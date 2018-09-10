@@ -62,11 +62,7 @@ class TimeOut extends Component {
                     </ul>
                     <h2 className="TimeOut__Headline">Places to avoid</h2>
                     <ul>
-                        {Object.keys(results.issues || {}).map(venueName => {
-                            if (results.issues[venueName].isIssue) {
-                                return <Issue venueName={venueName} issues={results.issues[venueName]} />
-                            }
-                        })}
+                        {Object.keys(results.issues || {}).map(venueName => results.issues[venueName].isIssue && <Issue venueName={venueName} issues={results.issues[venueName]} />)}
                     </ul>
                 </div>
             </div>
