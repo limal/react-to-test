@@ -15,7 +15,7 @@ class User extends Component {
         const {
             filteredUsers,
             username
-        } = this.props
+        } = this.props      
 
         return (
             <div className="User">

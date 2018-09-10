@@ -1,20 +1,35 @@
 import React, { Component } from 'react'
 import { users, venues } from '../data'
 import User from './User'
+import { getOutputVenues } from '../util'
 
 class TimeOut extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            filteredUsers: []
+            filteredUsers: [] // an array of selected users
         }
 
         this.updateFilterUser = this.updateFilterUser.bind(this)
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        console.log(getOutputVenues(users, venues, this.state.filteredUsers))
+    }
+
     updateFilterUser(username, checked) {
-        console.log(username, checked)
+        // by default remove a user that's about to be added/removed
+        let filteredUsers = this.state.filteredUsers.filter(name => name !== username)
+
+        if (checked) {
+            // add a user if a checkbox is selected
+            filteredUsers.push(username)
+        }
+
+        this.setState({
+            filteredUsers
+        })
     }
 
     render() {
