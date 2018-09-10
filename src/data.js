@@ -21,8 +21,8 @@ export const users = [
     },
     {
         "name": "Alan Allen",
-        "wont_eat": ["Meat", "Fish"],
-        "drinks": ["Soft drinks", "Tea"]
+        "wont_eat": ["Meat", "Fish", "Bread"],
+        "drinks": ["Soft drinks", "Tea", "Beer"]
     },
     {
         "name": "Bobby Robson",
